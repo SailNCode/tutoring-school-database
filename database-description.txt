@@ -1,0 +1,33 @@
+Celem bazy danych jest zarządzanie procesem edukacyjnym w szkole korepetycji z chemii oraz usprawnienie administracji, w szczególności w zakresie:
+
+1. Zarządzania informacjami o uczniach i opiekunach:
+  Przechowywanie podstawowych danych osobowych uczniów (Student) oraz ich opiekunów (Guardian), takich jak imię, nazwisko, numer telefonu oraz e-mail.
+  Przechowywanie informacji o poziomie nauczania ucznia (Level), który może być Standard Level (SL) lub Higher Level (HL), w zależności od programu nauczania.
+  Rejestracja władanych języków przez uczniów, tutorów oraz innych osób związanych ze szkołą, za pomocą relacji z tabelą LanguageSpeaking.
+2. Rejestrowania i monitorowania przebiegu zajęć:
+  Przechowywanie informacji o zajęciach (Lesson), takich jak data, czas rozpoczęcia, czas zakończenia, koszt oraz status anulowania.
+  Rejestracja frekwencji uczniów na zajęciach za pomocą tabeli Attendance.
+  Śledzenie, które podtematy (Subtopic) zostały omówione podczas konkretnych zajęć, w celu monitorowania postępów nauki i przygotowywania przyszłych lekcji.
+3. Zarządzania płatnościami:
+  Możliwość przypisania jednej płatności (Payment) do jednej lub wielu lekcji.
+  Umożliwienie wprowadzania lekcji do bazy danych przed jej opłaceniem Opłacenie lekcji jest wymagane najpóźniej dzień przed jej rozpoczęciem.
+4. Zbierania opinii o korepetytorach (Tutor):
+  Studenci mogą wystawiać oceny i dodawać komentarze na temat korepetytorów, które są rejestrowane w tabeli TutorReview.
+  Oceny te są automatycznie przeliczane za pomocą wyzwalacza, który aktualizuje średnią ocen (RatingAverage) w tabeli Tutor.
+5. Organizacji programu nauczania chemii:
+  Struktura programu nauczania jest podzielona na:
+    Rozdziały (Chapter) — podstawowe jednostki organizacyjne programu.
+    Tematy (Topic) — szczegółowe zagadnienia należące do poszczególnych rozdziałów.
+    Podtematy (Subtopic) — najmniejsze jednostki tematyczne, które można przypisywać do zajęć.
+  Dodatkowo, tabela Category pozwala na grupowanie tematów według nadrzędnych kategorii, takich jak:
+    1. Stoichiometric relationships
+    2. Atomic structure
+    3. Periodicity
+    4. Chemical bonding and structure
+    5. Thermochemistry
+    6. Chemical kinetics
+    7. Equilibrium
+    8. Acids and bases
+    9. Redox processes
+    10. Organic chemistry
+    11. Measurement and data processing
