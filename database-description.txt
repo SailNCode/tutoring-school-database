@@ -9,7 +9,7 @@ Celem bazy danych jest zarządzanie procesem edukacyjnym w szkole korepetycji z 
   Rejestracja frekwencji uczniów na zajęciach za pomocą tabeli Attendance.
   Śledzenie, które podtematy (Subtopic) zostały omówione podczas konkretnych zajęć, w celu monitorowania postępów nauki i przygotowywania przyszłych lekcji.
 3. Zarządzania płatnościami:
-  Możliwość przypisania jednej płatności (Payment) do jednej lub wielu lekcji.
+  Możliwość przypisania jednej płatności (Payment) do jednej lub wielu lekcji w tabeli asocjacyjnej PaymentForLesson.
   Umożliwienie wprowadzania lekcji do bazy danych przed jej opłaceniem Opłacenie lekcji jest wymagane najpóźniej dzień przed jej rozpoczęciem.
 4. Zbierania opinii o korepetytorach (Tutor):
   Studenci mogą wystawiać oceny i dodawać komentarze na temat korepetytorów, które są rejestrowane w tabeli TutorReview.
