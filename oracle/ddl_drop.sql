@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2025-01-11 13:10:52.645
+-- Last modification date: 2025-01-11 20:30:49.601
 
 -- foreign keys
 ALTER TABLE IsGuardian
@@ -85,8 +85,6 @@ DROP TABLE LanguageSpeaking;
 
 DROP TABLE Lesson;
 
-DROP TABLE "Level";
-
 DROP TABLE Payment;
 
 DROP TABLE PaymentForLesson;
@@ -94,6 +92,8 @@ DROP TABLE PaymentForLesson;
 DROP TABLE Person;
 
 DROP TABLE Student;
+
+DROP TABLE SubjectLevel;
 
 DROP TABLE Subtopic;
 

@@ -1,0 +1,109 @@
+CREATE OR REPLACE FUNCTION getStudentId
+    (firstName VARCHAR, lastName VARCHAR)
+RETURN INT
+AS
+    studentID INT;
+BEGIN
+    SELECT Student.personid
+    INTO studentid
+    FROM student
+    INNER JOIN PERSON ON person.id = student.personid
+    WHERE name = firstName AND surname = lastName;
+    RETURN studentid;
+END;
+
+CREATE OR REPLACE FUNCTION getPersonId
+    (firstName VARCHAR, lastName VARCHAR)
+RETURN INT
+AS
+    personID INT;
+BEGIN
+    SELECT id
+    INTO personID
+    FROM person
+    WHERE name = firstName AND surname = lastName;
+    RETURN personID;
+END;
+
+CREATE OR REPLACE FUNCTION getLessonLength
+    (lessonID INT)
+RETURN INT
+AS
+    lessonDuration INT;
+BEGIN
+    SELECT (endtime - starttime) * 1440
+    INTO lessonDuration
+    from lesson
+    WHERE ID = lessonID;
+
+    RETURN lessonDuration;
+END;
+--NOT GOOD
+CREATE OR REPLACE PROCEDURE printUnpaidLessons
+(firstName VARCHAR, lastName VARCHAR)
+AS
+BEGIN
+    SELECT *
+    FROM Lesson
+    JOIN ATTENDANCE ON Lesson.id = Attendance.lessonId
+    LEFT JOIN PAYMENTFORLESSon ON Lesson.id = PaymentForLesson.lessonid
+    WHERE paymentId IS NULL AND studentid = getStudentId(firstName, lastName);
+END;
+call printUnpaidLessons('Martyna', 'Kowalska');
+
+CREATE OR REPLACE PROCEDURE registerPayment
+    (payerID INT, student INT, value NUMBER)
+AS
+    paymentID INT;
+    totVal NUMBER(6,2);
+    CURSOR curs IS
+        SELECT *
+        FROM LESSON
+        LEFT JOIN PAYMENTFORLESSon ON Lesson.id = PaymentForLesson.lessonid
+        WHERE paymentId IS NULL AND EXISTS (SELECT 1 FROM ATTENDANCE WHERE Attendance.lessonid = lesson.id AND attendance.studentID = student)
+        ORDER BY STARTTIME ASC;
+    lessonValue NUMBER(6,2);
+    tempVal NUMBER(6,2);
+BEGIN
+    --Finding new id
+    totVal := value;
+    SELECT MAX(id) + 1
+    INTO paymentID
+    FROM PAYMENT;
+    --Creating payment
+    INSERT INTO PAYMENT VALUES(paymentID, payerID, CURRENT_DATE, value);
+    --Splitting transfer over specific lessons
+    FOR rec IN curs LOOP
+        lessonValue := rec.priceperhour*getLessonLength(rec.id)/60;
+        dbms_output.put_line('Price per hour: ' || rec.priceperhour || ', div: ' || getLessonLength(rec.id)/60);
+        IF totVal >= lessonValue THEN
+            INSERT INTO PAYMENTFORLESSON VALUES (REC.ID, paymentID, lessonValue);
+            dbms_output.put_line('Lesson (' || rec.ID || ') has been paid with ' || lessonValue || ' zł');
+            totVal := totVal - lessonValue;
+            dbms_output.put_line('total val: ' || totVal);
+
+        END IF;
+    END LOOP;
+    IF totVal != 0 THEN
+        --Means payment not covering the lessons appropriately
+        dbms_output.put_line('Payment value was unevent, thus ' || totVal || ' will be reverted');
+        SELECT totalvalue into tempVal FROM PAYMENT WHERE ID = paymentID;
+        dbms_output.put_line('TMP: ' || tempVal);
+        UPDATE PAYMENT
+        SET totalValue = (SELECT totalValue FROM PAYMENT WHERE ID = paymentID) - totVal
+        WHERE id = paymentID;
+    END IF;
+END;
+call registerPayment (2,3, 180); --Two Peter lessons unpaid, each for 60zł
+call registerPayment (5,6, 160); --One Martyna lessons, for 100zł
+select getminuteslength(2)/60 from dual;
+select * from payment;
+select * from PAYMENTFORLESSON
+
+DELETE
+FROM PAYMENTFORLESSON
+WHERE lessonID in (2,3,6);
+
+Delete
+from payment
+WHERE id > 2;

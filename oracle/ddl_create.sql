@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2025-01-11 13:10:52.645
+-- Last modification date: 2025-01-11 20:30:49.601
 
 -- tables
 -- Table: Attendance
@@ -63,18 +63,11 @@ CREATE TABLE Lesson (
     CONSTRAINT Lesson_pk PRIMARY KEY (ID)
 ) ;
 
--- Table: Level
-CREATE TABLE "Level" (
-    ID integer  NOT NULL,
-    "Level" char(2)  NOT NULL,
-    CONSTRAINT Level_pk PRIMARY KEY (ID)
-) ;
-
 -- Table: Payment
 CREATE TABLE Payment (
     ID integer  NOT NULL,
     PayerID integer  NOT NULL,
-    "Date" date  NOT NULL,
+    PaymentDate date  NOT NULL,
     TotalValue number(6,2)  NOT NULL,
     CONSTRAINT Payment_pk PRIMARY KEY (ID)
 ) ;
@@ -94,22 +87,29 @@ CREATE TABLE Person (
     Surname varchar2(50)  NOT NULL,
     PhoneNumber varchar2(20)  NULL,
     Email varchar2(50)  NULL,
-    DefaultPricePerHour number(6,2)  NOT NULL,
     CONSTRAINT Person_pk PRIMARY KEY (ID)
 ) ;
 
 -- Table: Student
 CREATE TABLE Student (
     PersonID integer  NOT NULL,
-    EnrollmentDate date  NOT NULL,
     LevelID integer  NOT NULL,
+    EnrollmentDate date  NOT NULL,
+    DefaultPricePerHour number(6,2)  NOT NULL,
     CONSTRAINT Student_pk PRIMARY KEY (PersonID)
+) ;
+
+-- Table: SubjectLevel
+CREATE TABLE SubjectLevel (
+    ID integer  NOT NULL,
+    SubjectLevel char(2)  NOT NULL,
+    CONSTRAINT SubjectLevel_pk PRIMARY KEY (ID)
 ) ;
 
 -- Table: Subtopic
 CREATE TABLE Subtopic (
     ID integer  NOT NULL,
-    SubtopicID integer  NOT NULL,
+    TopicID integer  NOT NULL,
     LevelID integer  NOT NULL,
     CatalogName varchar2(30)  NOT NULL,
     Name varchar2(100)  NOT NULL,
@@ -147,7 +147,7 @@ CREATE TABLE TutorReview (
     StudentID integer  NOT NULL,
     TutorID integer  NOT NULL,
     RatingValue integer  NOT NULL,
-    "Comment" varchar2(100)  NULL,
+    ReviewText varchar2(100)  NULL,
     CONSTRAINT TutorReview_pk PRIMARY KEY (StudentID,TutorID)
 ) ;
 
@@ -195,7 +195,7 @@ ALTER TABLE Attendance ADD CONSTRAINT StudentAttendsLesson_Student
 -- Reference: Student_Level (table: Student)
 ALTER TABLE Student ADD CONSTRAINT Student_Level
     FOREIGN KEY (LevelID)
-    REFERENCES "Level" (ID);
+    REFERENCES SubjectLevel (ID);
 
 -- Reference: Student_Person (table: Student)
 ALTER TABLE Student ADD CONSTRAINT Student_Person
@@ -205,11 +205,11 @@ ALTER TABLE Student ADD CONSTRAINT Student_Person
 -- Reference: SubTopic_Level (table: Subtopic)
 ALTER TABLE Subtopic ADD CONSTRAINT SubTopic_Level
     FOREIGN KEY (LevelID)
-    REFERENCES "Level" (ID);
+    REFERENCES SubjectLevel (ID);
 
 -- Reference: SubTopic_Topic (table: Subtopic)
 ALTER TABLE Subtopic ADD CONSTRAINT SubTopic_Topic
-    FOREIGN KEY (SubtopicID)
+    FOREIGN KEY (TopicID)
     REFERENCES Topic (ID);
 
 -- Reference: SubtopicCovered_Lesson (table: SubtopicCovered)
@@ -263,4 +263,3 @@ ALTER TABLE Tutor ADD CONSTRAINT Tutor_Person
     REFERENCES Person (ID);
 
 -- End of file.
-
