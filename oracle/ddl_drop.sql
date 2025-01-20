@@ -1,6 +1,12 @@
 -- Created by Vertabelo (http://vertabelo.com)
 -- Last modification date: 2025-01-11 20:30:49.601
+DROP PROCEDURE addStudent;
+DROP PROCEDURE registerPayment;
+DROP TRIGGER guardPricePerHourIntegrity;
+DROP TRIGGER updateRatingAverage;
 
+DROP FUNCTION getPersonId;
+DROP FUNCTION getLessonLength
 -- foreign keys
 ALTER TABLE IsGuardian
     DROP CONSTRAINT IsGuardian_Guardian;
@@ -106,4 +112,3 @@ DROP TABLE Tutor;
 DROP TABLE TutorReview;
 
 -- End of file.
-

@@ -34,11 +34,11 @@ INSERT INTO SUBTOPIC VALUES (6, 5, 2, 'Structure 3.1.10', 'Coloured complexes');
 
 --Person
 INSERT INTO PERSON VALUES (1, 'Kamil', 'Stefanski', '+48666666666', 'kamil@gmail.com');
-INSERT INTO PERSON (id, name, surname, phonenumber) VALUES (2, 'Tatiana', 'Gomez', '+48123123123');
-INSERT INTO PERSON (id, name, surname) VALUES (3, 'Peter', 'Gomez');
-INSERT INTO PERSON (id, name, surname) VALUES (4, 'Nikola', 'Gomez');
-INSERT INTO PERSON (id, name, surname) VALUES (5, 'Ola', 'Kowalska');
-INSERT INTO PERSON (id, name, surname) VALUES (6, 'Martyna', 'Kowalska');
+INSERT INTO PERSON (id, name, surname, email, phonenumber) VALUES (2, 'Tatiana', 'Gomez', 'tgomez@poczta.onet.pl', '+48123123123');
+INSERT INTO PERSON (id, name, surname, email) VALUES (3, 'Peter', 'Gomez', 'pedroGomez@op.pl');
+INSERT INTO PERSON (id, name, surname, email) VALUES (4, 'Nikola', 'Gomez', 'nikigomi@pocztex.pl');
+INSERT INTO PERSON (id, name, surname, email) VALUES (5, 'Ola', 'Kowalska', 'kowalola@outlook.com');
+INSERT INTO PERSON (id, name, surname, email) VALUES (6, 'Martyna', 'Kowalska', 'mk1255@gmail.com');
 --Tutor
 INSERT INTO TUTOR VALUES (1, NULL, '2022-10-01');
 --Guardian

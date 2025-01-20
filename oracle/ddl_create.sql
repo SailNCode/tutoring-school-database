@@ -1,5 +1,5 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2025-01-11 20:30:49.601
+-- Last modification date: 2025-01-20 20:06:04.398
 
 -- tables
 -- Table: Attendance
@@ -13,6 +13,7 @@ CREATE TABLE Attendance (
 CREATE TABLE Category (
     ID integer  NOT NULL,
     Name varchar2(20)  NOT NULL,
+    CONSTRAINT Category_Name UNIQUE (Name),
     CONSTRAINT Category_pk PRIMARY KEY (ID)
 ) ;
 
@@ -21,6 +22,8 @@ CREATE TABLE Chapter (
     ID integer  NOT NULL,
     CatalogName varchar2(30)  NOT NULL,
     Name varchar2(100)  NOT NULL,
+    CONSTRAINT Chapter_CatalogName UNIQUE (CatalogName),
+    CONSTRAINT Chapter_Name UNIQUE (Name),
     CONSTRAINT Chapter_pk PRIMARY KEY (ID)
 ) ;
 
@@ -42,6 +45,8 @@ CREATE TABLE Language (
     ID integer  NOT NULL,
     ISOCode char(2)  NOT NULL,
     Name varchar2(20)  NULL,
+    CONSTRAINT Language_ISO UNIQUE (ISOCode),
+    CONSTRAINT Language_Name UNIQUE (Name),
     CONSTRAINT Language_pk PRIMARY KEY (ID)
 ) ;
 
@@ -86,7 +91,7 @@ CREATE TABLE Person (
     Name varchar2(20)  NOT NULL,
     Surname varchar2(50)  NOT NULL,
     PhoneNumber varchar2(20)  NULL,
-    Email varchar2(50)  NULL,
+    Email varchar2(50)  NOT NULL,
     CONSTRAINT Person_pk PRIMARY KEY (ID)
 ) ;
 
@@ -103,6 +108,7 @@ CREATE TABLE Student (
 CREATE TABLE SubjectLevel (
     ID integer  NOT NULL,
     SubjectLevel char(2)  NOT NULL,
+    CONSTRAINT SubjectLevel_SubjectLevel UNIQUE (SubjectLevel),
     CONSTRAINT SubjectLevel_pk PRIMARY KEY (ID)
 ) ;
 
@@ -113,6 +119,8 @@ CREATE TABLE Subtopic (
     LevelID integer  NOT NULL,
     CatalogName varchar2(30)  NOT NULL,
     Name varchar2(100)  NOT NULL,
+    CONSTRAINT Subtopic_CatalogName UNIQUE (CatalogName),
+    CONSTRAINT Subtopic_Name UNIQUE (Name),
     CONSTRAINT Subtopic_pk PRIMARY KEY (ID)
 ) ;
 
@@ -131,6 +139,8 @@ CREATE TABLE Topic (
     CategoryID integer  NULL,
     CatalogName varchar2(30)  NOT NULL,
     Name varchar2(100)  NOT NULL,
+    CONSTRAINT Topic_CatalogName UNIQUE (CatalogName),
+    CONSTRAINT Topic_Name UNIQUE (Name),
     CONSTRAINT Topic_pk PRIMARY KEY (ID)
 ) ;
 
@@ -148,6 +158,7 @@ CREATE TABLE TutorReview (
     TutorID integer  NOT NULL,
     RatingValue integer  NOT NULL,
     ReviewText varchar2(100)  NULL,
+    CONSTRAINT RatingValueCheck CHECK (RatingValue >= 1 AND RatingValue <= 5),
     CONSTRAINT TutorReview_pk PRIMARY KEY (StudentID,TutorID)
 ) ;
 
@@ -263,3 +274,4 @@ ALTER TABLE Tutor ADD CONSTRAINT Tutor_Person
     REFERENCES Person (ID);
 
 -- End of file.
+

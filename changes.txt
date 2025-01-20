@@ -1,5 +1,0 @@
-1. Zmieniłem typ relacji w {Person-Student, Person-Tutor}, by lepiej przedstawić inheritance
-2. Dodałem tabelę asocjacyjną - isGuardian, by uwzględnić możliwość opieki nad więcej niż jednym uczniem
-3. Dodałem FK PersonID do Payment oraz tabelę PaymentForLesson
-4. W Payment występuje pole TotalValue reprezentujące całkowitą wartość płatności,
-a w PaymentForLesson występuję (koncepcyjnie) część TotalValue, pokrywająca daną lekcję
