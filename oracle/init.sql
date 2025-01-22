@@ -143,7 +143,7 @@ BEGIN
     FROM LESSON
     WHERE id = lessonID_;
 
-    IF defaultPricePerHour_ != lessonPricePerHour_ THEN
+    IF lessonPricePerHour_ > defaultPricePerHour_ THEN
         dbms_output.put_line('Price per hour for lesson (' || lessonID_ || ') has been corrected from ' || lessonPricePerHour_ || 'zł to ' || defaultPricePerHour_ || 'zł.');
         UPDATE LESSON
         SET PricePerHour = defaultPricePerHour_

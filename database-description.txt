@@ -31,3 +31,21 @@ Celem bazy danych jest zarządzanie procesem edukacyjnym w szkole korepetycji z 
     9. Redox processes
     10. Organic chemistry
     11. Measurement and data processing
+Procedury:
+
+1. addStudent @name VARCHAR(50), @surname VARCHAR(50), @email VARCHAR(50), @enrollmentDate DATETIME, @subjectLevel CHAR(2), @price MONEY, @langISO CHAR(2), @phoneNumber VARCHAR(50) = NULL
+  Dodaje studenta z przekazanymi w metodzie argumentami. @phoneNumber jest opcjonalny, ponieważ jako wartość default posiada NULL.
+  W przypadku nierozpoznawalności @subjectLevel lub @langISO transakcja zostaje przerwana i odpowiedni komunikat zostaje wydrukowany.
+
+2. registerPayment @payerID INT, @studID INT, @value MONEY
+  Tworzy nową płatność w PAYMENT z przekazaną wartością @value. Następnie jest ona dzielona na pojedyncze opłacenia zajęć w tabeli PAYMENTFORLESSON w kolejności najstarszych zajęć.
+  W przypadku nierównej reszty / braku zajęc do wypłacenia zostaje wydrukowany komunikat, by zwrócić tę wartość płatnikowi i wartość w rekordzie PAYMENT zostaje zaktualizowana.
+
+Wyzwalacze:
+
+1. guardPricePerHourIntegrity
+  Pilnuje, by cena lekcji nie była większa niż DefaultPricePerHour w STUDENT. W przypadku naruszenia zasady, cena zajęć zostaje ustawiona jako DefaultPricePerHour danego ucznia.
+  Celem wyzwalacza jest, by nie przekraczać DefaultPricePerHour danego ucznia, jednocześnie umożliwiając dodawanie lekcji o promocyjnej cenie.
+
+2. updateRatingAverage
+  Po usunięciu, dodaniu, zaktualizowaniu rekordu w TUTORREVIEW, zostaje obliczona nowa średnia dla każdego korepetytora TUTOR. Jest ona w zakresie [1-5].
